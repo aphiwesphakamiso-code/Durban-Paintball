@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Durban Paintball — KZN's longest standing paintball arena. Paintball, Splatball and Lasertag in Durban North."/>
+  <title>Durban Paintball | KZN's No.1 Paintball &amp; Lasertag Arena</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    /* ── Pricing card internals ── */
+    .pkg-block {
+      background: rgba(204,0,0,0.07);
+      border-left: 2px solid var(--red);
+      padding: 13px 16px;
+      margin-bottom: 8px;
+    }
+    .pkg-name {
+      font-family: var(--font-accent);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--grey-light); margin-bottom: 4px;
+    }
+    .pkg-price {
+      font-family: var(--font-display);
+      font-size: 30px; color: var(--yellow); line-height: 1;
+    }
+    .pkg-price span {
+      font-family: var(--font-accent);
+      font-size: 12px; color: var(--grey); font-weight: 400;
+    }
+    .pkg-single-price {
+      font-family: var(--font-display);
+      font-size: 46px; color: var(--yellow);
+      line-height: 1; margin: 12px 0 18px;
+    }
+    .pkg-single-price span {
+      font-family: var(--font-accent);
+      font-size: 14px; color: var(--grey); font-weight: 400;
+    }
+    .extras-block {
+      margin-top: 14px; padding: 12px 14px;
+      background: rgba(255,215,0,0.04);
+      border: 1px solid rgba(255,215,0,0.12);
+    }
+    .extras-title {
+      font-family: var(--font-accent);
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--yellow-dim); margin-bottom: 8px;
+    }
+    .extras-row {
+      font-size: 13px; color: var(--grey);
+      line-height: 1.6; display: flex; gap: 8px; align-items: flex-start;
+    }
+    .extras-row::before {
+      content: '+'; color: var(--yellow);
+      font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+    .duration-note {
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      font-family: var(--font-accent);
+      font-size: 12px; color: var(--grey); line-height: 1.65;
+    }
+    .duration-label {
+      display: block;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--red); margin-bottom: 4px;
+    }
+    .recommended-badge {
+      display: inline-block;
+      font-family: var(--font-accent);
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      background: var(--yellow); color: var(--black);
+      padding: 4px 10px; margin-bottom: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor-outer"></div>
+<div class="cursor-inner"></div>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-main">DURBAN <em>PAINT</em>BALL</span>
+    <span class="nav-logo-sub">Durban North &middot; Est. 1989</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="rules.html">Rules</a></li>
+    <li><a href="lasertag.html">Lasertag</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="splatter splatter-1" style="top:10%;right:20%;"></div>
+    <div class="splatter splatter-2 yellow" style="bottom:20%;right:35%;opacity:0.04;"></div>
+  </div>
+
+  <div class="hero-photo">
+    <img src="YOUR-HERO-PHOTO.jpg"
+         alt="Durban Paintball Arena - Action shot"
+         style="width:100%; height:100%; object-fit:cover; display:block;">
+  </div>
+  <div class="hero-overlay"></div>
+
+  <svg class="hero-reticle" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="196" stroke="white" stroke-width="1"/>
+    <circle cx="200" cy="200" r="140" stroke="white" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="80"  stroke="white" stroke-width="1.5"/>
+    <circle cx="200" cy="200" r="8"   stroke="white" stroke-width="1.5"/>
+    <line x1="200" y1="4"   x2="200" y2="120" stroke="white" stroke-width="0.8"/>
+    <line x1="200" y1="280" x2="200" y2="396" stroke="white" stroke-width="0.8"/>
+    <line x1="4"   y1="200" x2="120" y2="200" stroke="white" stroke-width="0.8"/>
+    <line x1="280" y1="200" x2="396" y2="200" stroke="white" stroke-width="0.8"/>
+    <line x1="200" y1="55"  x2="200" y2="68"  stroke="white" stroke-width="0.8"/>
+    <line x1="200" y1="332" x2="200" y2="345" stroke="white" stroke-width="0.8"/>
+    <line x1="55"  y1="200" x2="68"  y2="200" stroke="white" stroke-width="0.8"/>
+    <line x1="332" y1="200" x2="345" y2="200" stroke="white" stroke-width="0.8"/>
+    <circle cx="200" cy="60"  r="2.5" fill="white"/>
+    <circle cx="200" cy="340" r="2.5" fill="white"/>
+    <circle cx="60"  cy="200" r="2.5" fill="white"/>
+    <circle cx="340" cy="200" r="2.5" fill="white"/>
+    <path d="M200 4 A196 196 0 0 1 396 200" stroke="white" stroke-width="0.4" stroke-dasharray="4 8"/>
+    <path d="M396 200 A196 196 0 0 1 200 396" stroke="white" stroke-width="0.4" stroke-dasharray="4 8"/>
+    <path d="M200 396 A196 196 0 0 1 4 200" stroke="white" stroke-width="0.4" stroke-dasharray="4 8"/>
+    <path d="M4 200 A196 196 0 0 1 200 4" stroke="white" stroke-width="0.4" stroke-dasharray="4 8"/>
+  </svg>
+
+  <div class="wrap" style="position:relative;z-index:3;width:100%;">
+    <div class="hero-content">
+      <div class="hero-badge">Durban North, KZN &mdash; Bookings Essential</div>
+      <h1 class="heading hero-title" style="font-size:clamp(76px,11vw,148px);margin-bottom:20px;">
+        LOCK &amp;<br><span class="r">LOAD</span><br><span class="o">UP.</span>
+      </h1>
+      <p class="hero-sub">Paintball, Splatball &amp; Lasertag &mdash; forged for thrill-seekers of all ages at KZN's longest standing combat sports arena.</p>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.17 11 19.79 19.79 0 01.09 2.36 2 2 0 012.06.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.09a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Book Your Session
+        </a>
+        <a href="#services" class="btn btn-secondary">Explore Activities</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num" data-count="35" data-suffix="+">35+</span>
+      <span class="hero-stat-label">Years Experience</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" data-count="218" data-suffix="">218</span>
+      <span class="hero-stat-label">Google Reviews</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" data-count="4.5" data-suffix=" Stars">4.5 Stars</span>
+      <span class="hero-stat-label">Rating</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num" data-count="3" data-suffix=" Activities">3 Activities</span>
+      <span class="hero-stat-label">Paintball, Splatball, Lasertag</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SERVICES ═══════════════════ -->
+<section class="services-bg section-pad" id="services">
+  <div class="wrap">
+    <p class="eyebrow reveal">What We Do</p>
+    <h2 class="heading reveal d1" style="margin-bottom:16px;">AN ARENA FOR<br><span class="r">EVERY</span> OCCASION</h2>
+    <p class="lead reveal d2" style="margin-bottom:0;">From wild birthday parties to corporate team-builds &mdash; we have the field, the gear and 35 years of expertise to deliver an unforgettable day.</p>
+    <div class="services-grid">
+      <div class="service-card reveal d1">
+        <div class="service-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2" y="8" width="20" height="14" rx="2"/><path d="M12 8V5"/><path d="M8 8V6"/><path d="M16 8V6"/><circle cx="12" cy="4" r="1"/><circle cx="8" cy="5" r="1"/><circle cx="16" cy="5" r="1"/></svg></div>
+        <h3>Birthday Parties</h3>
+        <p>Make their special day legendary. Kids and adults love it &mdash; bring the whole crew.</p>
+      </div>
+      <div class="service-card reveal d2">
+        <div class="service-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+        <h3>Kids Parties</h3>
+        <p>Splatball &mdash; low impact fun for kids aged 6 to 10 years old.</p>
+      </div>
+      <div class="service-card reveal d3">
+        <div class="service-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>Team Buildings</h3>
+        <p>Forge stronger teams through strategy, communication, and a whole lot of adrenaline.</p>
+      </div>
+      <div class="service-card reveal d4">
+        <div class="service-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3>School Outings</h3>
+        <p>Organised, safe, and exciting &mdash; the field trip kids will actually remember.</p>
+      </div>
+      <div class="service-card reveal d5">
+        <div class="service-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
+        <h3>Community Events</h3>
+        <p>Open days, fundraisers, tournaments &mdash; we cater for groups big and small.</p>
+      </div>
+      <div class="service-card reveal d6">
+        <div class="service-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 9l9-7 9 7"/><path d="M9 22V12h6v10"/><rect x="3" y="9" width="18" height="13" rx="1"/></svg></div>
+        <h3>Family Fun Days</h3>
+        <p>The whole family on the same field? Pure chaos. The absolute best kind.</p>
+      </div>
+      <div class="service-card reveal d7">
+        <div class="service-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3>Stag Parties</h3>
+        <p>Send them off in style. Last mission before the vows &mdash; make it count.</p>
+      </div>
+      <div class="service-card reveal d8">
+        <div class="service-icon-wrap"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg></div>
+        <h3>Fun Day Out</h3>
+        <p>Just looking for a great time? Small groups and individuals welcome by booking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ABOUT ═══════════════════ -->
+<section class="about-bg section-pad" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-l">
+        <img src="paintball-main.jpg" alt="Durban Paintball Arena" style="width:100%;height:460px;object-fit:cover;display:block;">
+      </div>
+      <div class="about-body reveal-r">
+        <p class="eyebrow">Our Story</p>
+        <h2 class="heading" style="font-size:clamp(40px,5vw,70px);margin-bottom:22px;">KZN'S MOST<br><span class="r">BATTLE-HARDENED</span><br>ARENA</h2>
+        <p>We are the longest standing paintball arena and company in KwaZulu-Natal. With over <strong>35 years of experience</strong>, we are professionals in all things paintball and lasertag.</p>
+        <p>Our experienced team ensures you have only the best time. We constantly upgrade our equipment and fields to bring you the very best &mdash; no matter the event.</p>
+        <blockquote class="about-blockquote">"We take pride in what we do and constantly upgrade our equipment and fields to bring you only the best."</blockquote>
+        <p>We thank our loyal customers and welcome newcomers &mdash; join the Durban Lasertag and Paintball family.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:30px;">
+          <a href="contact.html" class="btn btn-primary">Book Now</a>
+          <a href="lasertag.html" class="btn btn-secondary">View Lasertag</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ GALLERY ═══════════════════ -->
+<section class="gallery-bg section-pad">
+  <div class="wrap" style="padding-bottom:0;">
+    <p class="eyebrow reveal">The Arena</p>
+    <h2 class="heading reveal d1">LIFE ON THE <span class="r">FIELD</span></h2>
+  </div>
+  <div class="wrap reveal" style="padding-top:0;">
+    <div class="gallery-grid">
+      <div class="gallery-item g1">
+        <img src="pexels-amar-15449171.jpg" alt="Hero Action Shot" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-item g2">
+        <img src="galleryphoto2.jpg" alt="Field Overview" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-item g3">
+        <img src="galleryphoto3.jpg" alt="Bunkers and Cover" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-item g4">
+        <img src="galleryphoto4.jpg" alt="Players in Action" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-item g5">
+        <img src="durban lasertag.jpg" alt="Gear and Equipment" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-item g6">
+        <img src="galleryphoto5.jpg" alt="Group Photo" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-item g7">
+        <img src="galleryphoto6.jpg" alt="Lasertag Setup" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+      <div class="gallery-item g8">
+        <img src="galleryphoto7.jpg" alt="Party Venue" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PRICING ═══════════════════ -->
+<section class="pricing-bg section-pad" id="pricing">
+  <div class="wrap">
+    <p class="eyebrow reveal">Packages &amp; Pricing</p>
+    <h2 class="heading reveal d1">CHOOSE YOUR <span class="y">BATTLE</span></h2>
+    <p class="lead reveal d2" style="margin-bottom:0;">All packages include use of the party area and tables. Prices are per person &mdash; call us to confirm your booking.</p>
+
+    <div class="pricing-grid" style="margin-top:56px;">
+
+      <!-- ══ PAINTBALL ══ -->
+      <div class="pricing-card reveal d1">
+        <div class="pricing-tag">Ages 10 &amp; Older</div>
+        <div class="pricing-type">PAINTBALL</div>
+        <div class="pricing-desc">The original combat experience. Pick your package and load up.</div>
+
+        <div class="pkg-block">
+          <div class="pkg-name">Package 1 &mdash; 100 Paintballs</div>
+          <div class="pkg-price">R170 <span>per person</span></div>
+        </div>
+        <div class="pkg-block">
+          <div class="pkg-name">Package 2 &mdash; 200 Paintballs</div>
+          <div class="pkg-price">R210 <span>per person</span></div>
+        </div>
+
+        <ul class="pricing-feats" style="margin-top:16px;">
+          <li class="pricing-feat">Safety goggles &amp; dust jacket</li>
+          <li class="pricing-feat">Paintball marker</li>
+          <li class="pricing-feat">Party area &amp; tables</li>
+        </ul>
+
+        <div class="extras-block">
+          <div class="extras-title">Extras</div>
+          <div class="extras-row">R75.00 for 50 extra paintballs</div>
+          <div class="extras-row">R150.00 for 100 extra paintballs</div>
+        </div>
+
+        <div class="duration-note">
+          <span class="duration-label">Duration</span>
+          Dependent on numbers, paintballs and manner of play. Phone for more info.
+        </div>
+
+        <a href="contact.html" class="pricing-cta" style="display:block;text-align:center;margin-top:20px;">Book Now</a>
+      </div>
+
+      <!-- ══ SPLATBALL ══ -->
+      <div class="pricing-card featured reveal d2">
+        <div class="pricing-tag">Ages 6 &ndash; 10 Years</div>
+        <div class="pricing-type">SPLATBALL</div>
+        <div class="pricing-desc">Low impact paintball &mdash; softer ammo, same adrenaline, zero tears.</div>
+
+        <div class="pkg-single-price">R170 <span>per person</span></div>
+
+        <ul class="pricing-feats">
+          <li class="pricing-feat">90 high grade 0.50 cal paintballs</li>
+          <li class="pricing-feat">Safety goggle &amp; dust jacket</li>
+          <li class="pricing-feat">Splatball marker</li>
+          <li class="pricing-feat">Party area &amp; tables</li>
+        </ul>
+
+        <div class="duration-note">
+          <span class="duration-label">Duration</span>
+          Dependent on numbers, balls and manner of play. Phone for more info.
+        </div>
+
+        <a href="contact.html" class="pricing-cta" style="display:block;text-align:center;margin-top:20px;">Book Now</a>
+      </div>
+
+      <!-- ══ LASERTAG ══ -->
+      <div class="pricing-card reveal d3">
+        <div class="recommended-badge">Highly Recommended</div>
+        <div class="pricing-tag">Ages 6 &amp; Older</div>
+        <div class="pricing-type">LASERTAG</div>
+        <div class="pricing-desc">Electronic, pain-free paintball. The most advanced taggers in the country.</div>
+
+        <div class="pkg-single-price">R160 <span>per person</span></div>
+
+        <ul class="pricing-feats">
+          <li class="pricing-feat">Min. 4 to 5 &times; 10min games</li>
+          <li class="pricing-feat">Advanced lasertag taggers</li>
+          <li class="pricing-feat">Party area &amp; tables</li>
+        </ul>
+
+        <div class="duration-note">
+          <span class="duration-label">Duration &mdash; 2 Hours</span>
+          First hour for games. Second hour for party / lunch at one of the picnic spots.
+        </div>
+
+        <a href="lasertag.html" class="pricing-cta" style="display:block;text-align:center;margin-top:20px;">Learn More</a>
+      </div>
+
+    </div>
+
+    <p class="reveal" style="text-align:center;margin-top:28px;font-family:var(--font-accent);font-size:13px;letter-spacing:1px;color:var(--grey);">
+      Bookings essential &mdash; call <strong style="color:var(--yellow);">076 444 5570</strong> or <strong style="color:var(--yellow);">064 004 5194</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════ REVIEWS ═══════════════════ -->
+<section class="reviews-bg section-pad" id="reviews">
+  <div class="wrap">
+    <div class="reviews-header">
+      <div>
+        <p class="eyebrow reveal">What People Say</p>
+        <h2 class="heading reveal d1" style="font-size:clamp(40px,5.5vw,72px);">REAL <span class="r">STORIES</span>,<br>REAL <span class="y">HITS</span></h2>
+      </div>
+      <div class="rating-display reveal-r">
+        <div class="rating-big-num">4.5</div>
+        <div>
+          <div class="rating-stars-row">
+            <svg width="22" height="22" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24"><defs><linearGradient id="hg"><stop offset="50%" stop-color="#FFD700"/><stop offset="50%" stop-color="#333"/></linearGradient></defs><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="url(#hg)"/></svg>
+          </div>
+          <div class="rating-count">218 Google Reviews</div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card reveal d1">
+        <div class="review-stars-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+        </div>
+        <p class="review-text">"We had an absolutely amazing time at Durban North Paintball. The staff were incredibly welcoming and accommodating from start to finish."</p>
+        <div class="review-author">Amina Khan</div>
+        <div class="review-date">3 months ago</div>
+      </div>
+      <div class="review-card reveal d2">
+        <div class="review-stars-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+        </div>
+        <p class="review-text">"Had a birthday party today &mdash; good fun for the kids. The guy in charge was a great host, very helpful and made sure everyone had a blast."</p>
+        <div class="review-author">Anthony Feeke</div>
+        <div class="review-date">4 months ago &mdash; Local Guide</div>
+      </div>
+      <div class="review-card reveal d3">
+        <div class="review-stars-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#FFD700"/></svg>
+        </div>
+        <p class="review-text">"Was an epic family day out. We thoroughly enjoyed our paintball experience and had loads of fun. Staff are so friendly and helpful."</p>
+        <div class="review-author">Jenasha Tooray</div>
+        <div class="review-date">2 years ago &mdash; Local Guide</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<div class="cta-banner">
+  <div class="splatter splatter-1" style="right:5%;top:-50%;pointer-events:none;"></div>
+  <h2>READY TO PLAY?</h2>
+  <p>Bookings are essential &mdash; call us today to secure your slot</p>
+  <a href="contact.html" class="btn btn-primary">076 444 5570</a>
+</div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo-main">DURBAN <em>PAINT</em>BALL</div>
+        <p class="footer-tagline">KZN's longest standing paintball arena with over 35 years of experience. Paintball, Splatball &amp; Lasertag built for memories.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="rules.html">Paintball Rules</a></li>
+          <li><a href="lasertag.html">Durban Lasertag</a></li>
+          <li><a href="contact.html">Contact &amp; Directions</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="tel:0764445570">076 444 5570</a></li>
+          <li><a href="tel:0640045194">064 004 5194</a></li>
+          <li><a href="contact.html">31 Uitsig Road, Durban North, 4051</a></li>
+          <li><a href="http://www.durbanlasertag.co.za" target="_blank">durbanlasertag.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 Durban Paintball &mdash; Durban North, KZN</div>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Durban Lasertag — pain-free electronic combat simulation with the most advanced lasertag taggers in the country. All ages welcome."/>
+  <title>Durban Lasertag | Durban Paintball</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    @keyframes heroEnter {
+      from { opacity:0; transform:translateY(28px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* Photo row */
+    .lt-photo-row { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; margin-top:52px; }
+    .lt-photo-item { height:270px; overflow:hidden; }
+    .lt-photo-item.wide { grid-column:span 2; }
+    .lt-photo-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease; }
+    .lt-photo-item:hover img { transform:scale(1.05); }
+
+    /* Old vs New */
+    .vs-grid { display:grid; grid-template-columns:1fr auto 1fr; margin-top:56px; align-items:stretch; }
+    .vs-panel { padding:40px 36px; display:flex; flex-direction:column; gap:14px; }
+    .vs-panel.old { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); }
+    .vs-panel.new { background:rgba(0,200,255,0.04); border:1px solid rgba(0,200,255,0.14); }
+    .vs-label { font-family:var(--font-display); font-size:12px; letter-spacing:4px; text-transform:uppercase; margin-bottom:4px; }
+    .vs-label.old-label { color:var(--red); }
+    .vs-label.new-label { color:#00C8FF; }
+    .vs-title { font-family:var(--font-display); font-size:clamp(26px,3.5vw,42px); letter-spacing:1px; line-height:1; }
+    .vs-title.old-title { color:rgba(255,255,255,0.25); }
+    .vs-title.new-title { color:var(--white); }
+    .vs-list { display:flex; flex-direction:column; gap:9px; margin-top:8px; }
+    .vs-item { display:flex; align-items:flex-start; gap:10px; font-family:var(--font-accent); font-size:14px; line-height:1.5; }
+    .vs-item.bad { color:var(--grey); }
+    .vs-item.good { color:var(--grey-light); }
+    .vs-mark { flex-shrink:0; width:17px; height:17px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:900; margin-top:1px; }
+    .vs-item.bad  .vs-mark { background:rgba(204,0,0,0.18); color:var(--red); }
+    .vs-item.good .vs-mark { background:rgba(0,200,255,0.15); color:#00C8FF; }
+    .vs-divider { display:flex; align-items:center; justify-content:center; padding:0 20px; background:var(--black); border-top:1px solid rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.04); }
+    .vs-vs-text { font-family:var(--font-display); font-size:38px; color:rgba(255,255,255,0.06); letter-spacing:2px; writing-mode:vertical-rl; }
+
+    /* Weapon types */
+    .weapon-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; margin-top:48px; background:rgba(255,255,255,0.04); }
+    .weapon-card { background:var(--black-2); padding:32px 28px; position:relative; overflow:hidden; transition:background var(--transition); }
+    .weapon-card::before { content:''; position:absolute; top:0; left:0; width:0; height:2px; background:#00C8FF; transition:width 0.4s ease; }
+    .weapon-card:hover { background:var(--black-3); }
+    .weapon-card:hover::before { width:100%; }
+    .weapon-num { font-family:var(--font-display); font-size:58px; color:rgba(0,200,255,0.07); line-height:1; margin-bottom:10px; }
+    .weapon-card h3 { font-family:var(--font-display); font-size:22px; letter-spacing:1px; color:var(--white); margin-bottom:8px; }
+    .weapon-card p { font-size:14px; color:var(--grey); line-height:1.6; }
+
+    /* LCD section */
+    .lcd-section { background:#020a14; border-top:1px solid rgba(0,200,255,0.1); border-bottom:1px solid rgba(0,200,255,0.08); }
+    .lcd-grid { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; }
+    .lcd-screen-wrap { position:relative; border:1px solid rgba(0,200,255,0.2); background:#000; box-shadow:0 0 40px rgba(0,200,255,0.08); }
+    .lcd-screen-label { font-family:var(--font-accent); font-size:9px; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#00C8FF; background:rgba(0,200,255,0.06); border-bottom:1px solid rgba(0,200,255,0.12); padding:9px 16px; text-align:center; }
+    .lcd-screen-img { width:100%; display:block; }
+    .lcd-scan-overlay { position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,200,255,0.03) 2px,rgba(0,200,255,0.03) 3px); pointer-events:none; }
+    .lcd-features { display:flex; flex-direction:column; }
+    .lcd-feat { display:flex; align-items:flex-start; gap:14px; padding:15px 0; border-bottom:1px solid rgba(0,200,255,0.06); }
+    .lcd-feat:last-child { border-bottom:none; }
+    .lcd-feat-icon { width:34px; height:34px; flex-shrink:0; border:1px solid rgba(0,200,255,0.2); display:flex; align-items:center; justify-content:center; background:rgba(0,200,255,0.04); }
+    .lcd-feat-icon svg { stroke:#00C8FF; }
+    .lcd-feat h4 { font-family:var(--font-accent); font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--white); margin-bottom:2px; }
+    .lcd-feat p { font-size:13px; color:var(--grey); line-height:1.5; }
+
+    /* Sirius station */
+    .sirius-section { background:var(--black-2); }
+    .sirius-grid { display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center; }
+    .sirius-modes { display:flex; flex-direction:column; gap:3px; margin-top:24px; }
+    .sirius-mode { display:flex; align-items:flex-start; gap:14px; background:var(--black-3); padding:15px 18px; border-left:2px solid transparent; transition:all var(--transition); }
+    .sirius-mode:hover { border-left-color:#00C8FF; background:rgba(0,200,255,0.04); transform:translateX(4px); }
+    .sirius-mode-badge { width:30px; height:30px; flex-shrink:0; border:1px solid rgba(0,200,255,0.25); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:13px; color:#00C8FF; }
+    .sirius-mode h4 { font-family:var(--font-accent); font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--white); margin-bottom:3px; }
+    .sirius-mode p { font-size:13px; color:var(--grey); line-height:1.5; }
+    .sirius-visual { border:1px solid rgba(0,200,255,0.15); background:linear-gradient(135deg,#000a18,#001a18); padding:52px 36px; display:flex; flex-direction:column; align-items:center; gap:22px; box-shadow:0 0 30px rgba(0,200,255,0.06); }
+
+    /* Responsive */
+    @media(max-width:960px){
+      .lt-photo-row { grid-template-columns:1fr; }
+      .lt-photo-item.wide { grid-column:span 1; }
+      .lt-intro-grid { grid-template-columns:1fr!important; }
+      .vs-grid { grid-template-columns:1fr; }
+      .vs-divider { display:none; }
+      .lcd-grid,.sirius-grid { grid-template-columns:1fr; }
+      .weapon-strip { grid-template-columns:1fr; }
+      .vs-panel { padding:24px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor-outer"></div>
+<div class="cursor-inner"></div>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-main">DURBAN <em>PAINT</em>BALL</span>
+    <span class="nav-logo-sub">Durban North &middot; Est. 1989</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="rules.html">Rules</a></li>
+    <li><a href="lasertag.html" class="active">Lasertag</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="nav-cta">Book Now</a></li>
+  </ul>
+  <button class="nav-toggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="lt-hero">
+  <div class="lt-dot-grid"></div>
+  <div class="scan-lines"></div>
+  <div class="laser-beam laser-beam-1"></div>
+  <div class="laser-beam laser-beam-2"></div>
+  <div class="laser-beam laser-beam-3"></div>
+  <div class="splatter splatter-2" style="position:absolute;top:10%;right:8%;opacity:0.05;background:#00C8FF;clip-path:polygon(45% 0%,55% 15%,70% 5%,68% 22%,85% 18%,80% 35%,100% 38%,85% 50%,95% 68%,75% 65%,78% 83%,60% 78%,55% 100%,42% 80%,28% 95%,30% 75%,12% 82%,18% 65%,0% 60%,15% 45%,5% 28%,22% 32%,20% 12%,38% 20%);pointer-events:none;"></div>
+
+  <div class="wrap" style="position:relative;z-index:2;width:100%;padding-top:60px;padding-bottom:100px;">
+    <div style="animation:heroEnter 0.7s 0.1s ease both;opacity:0;display:inline-flex;align-items:center;gap:10px;font-family:var(--font-accent);font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#00C8FF;border:1px solid rgba(0,200,255,0.3);padding:6px 16px;margin-bottom:28px;">
+      <span style="width:6px;height:6px;background:#00C8FF;border-radius:50%;animation:pulse 1.8s ease-in-out infinite;display:inline-block;"></span>
+      Highly Recommended &mdash; All Ages &amp; Events
+    </div>
+    <h1 class="heading" style="font-size:clamp(72px,10vw,136px);animation:heroEnter 0.8s 0.25s ease both;opacity:0;">
+      DURBAN<br><span style="color:#00C8FF;">LASER</span><br><span class="o">TAG</span>
+    </h1>
+    <p class="hero-sub" style="animation:heroEnter 0.8s 0.45s ease both;opacity:0;color:var(--grey-light);">
+      Zero pain. Maximum adrenaline. The most advanced lasertag system in South Africa &mdash; now live at Durban Paintball.
+    </p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;animation:heroEnter 0.8s 0.65s ease both;opacity:0;">
+      <a href="contact.html" class="btn btn-primary">Book Lasertag</a>
+      <a href="http://www.durbanlasertag.co.za" target="_blank" class="btn btn-secondary" style="border-color:rgba(0,200,255,0.3);color:#00C8FF;">Visit durbanlasertag.co.za</a>
+    </div>
+  </div>
+
+  <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);border-top:1px solid rgba(0,200,255,0.12);padding:14px 52px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;z-index:2;">
+    <span style="font-family:var(--font-accent);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.3);">For more info visit</span>
+    <a href="http://www.durbanlasertag.co.za" target="_blank" style="font-family:var(--font-display);font-size:22px;letter-spacing:3px;color:#00C8FF;">www.durbanlasertag.co.za</a>
+  </div>
+</section>
+
+<!-- ═══════════════════ WHAT IS LASERTAG ═══════════════════ -->
+<section style="background:var(--black-2);border-bottom:1px solid rgba(255,255,255,0.04);">
+  <div class="wrap section-pad">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;" class="lt-intro-grid">
+      <div class="reveal-l">
+        <p class="eyebrow">What Is It?</p>
+        <h2 class="heading" style="font-size:clamp(36px,4.5vw,64px);margin-bottom:22px;">COMBAT SIM,<br><span class="y">ZERO PAIN</span></h2>
+        <p style="color:var(--grey-light);line-height:1.88;margin-bottom:18px;font-size:16px;">Lasertag is a pain-free electronic version of paintball, offering visitors of all ages the chance to experience the fun and enjoyment that lasertag can bring to your event.</p>
+        <p style="color:var(--grey-light);line-height:1.88;margin-bottom:18px;font-size:16px;">Our goal is to make sure visitors have the time of their lives by offering them made-up combat simulation games that create an adrenaline filled and fun experience.</p>
+        <p style="color:var(--grey-light);line-height:1.88;margin-bottom:28px;font-size:16px;">We have just upgraded our lasertag equipment to the most advanced lasertag taggers in the country to give you only the best experience and gameplay, ensuring you have more fun than ever before!</p>
+        <blockquote style="border-left:3px solid #00C8FF;background:rgba(0,200,255,0.05);padding:16px 20px;font-family:var(--font-accent);font-style:italic;font-size:16px;color:var(--white);line-height:1.7;">
+          "Gaming made real &mdash; visit www.durbanlasertag.co.za for more info."
+        </blockquote>
+      </div>
+      <div class="reveal-r">
+        <img src="durban lasertag.jpg" alt="Lasertag Action" style="width:100%;height:420px;object-fit:cover;border:1px solid rgba(0,200,255,0.2);">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ OUT WITH THE OLD / IN WITH THE NEW ═══════════════════ -->
+<section style="background:var(--black);">
+  <div class="wrap section-pad">
+    <p class="eyebrow reveal">Equipment Upgrade</p>
+    <h2 class="heading reveal d1">IN WITH THE <span style="color:#00C8FF;">NEW</span></h2>
+    <p class="lead reveal d2" style="margin-bottom:0;">We invested in a completely new generation of lasertag taggers. Here is exactly why the upgrade changes everything.</p>
+
+    <div class="vs-grid reveal">
+      <!-- OLD -->
+      <div class="vs-panel old">
+        <div class="vs-label old-label">Out with the Old</div>
+        <div class="vs-title old-title">OLD TAGGER</div>
+        <div class="vs-list">
+          <div class="vs-item bad"><span class="vs-mark">&#x2715;</span>No sights for aim assist</div>
+          <div class="vs-item bad"><span class="vs-mark">&#x2715;</span>No in-game gun sounds &mdash; only a beep</div>
+          <div class="vs-item bad"><span class="vs-mark">&#x2715;</span>Green screen displaying limited stats only</div>
+          <div class="vs-item bad"><span class="vs-mark">&#x2715;</span>No additional devices for enhanced gameplay</div>
+          <div class="vs-item bad"><span class="vs-mark">&#x2715;</span>Only one receiver to aim for</div>
+          <div class="vs-item bad"><span class="vs-mark">&#x2715;</span>Heavy in weight</div>
+        </div>
+      </div>
+      <!-- DIVIDER -->
+      <div class="vs-divider"><div class="vs-vs-text">VS</div></div>
+      <!-- NEW -->
+      <div class="vs-panel new">
+        <div class="vs-label new-label">In with the New</div>
+        <div class="vs-title new-title">NEW TAGGER</div>
+        <div class="vs-list">
+          <div class="vs-item good"><span class="vs-mark">&#x2713;</span>Red dot sights for aim assist</div>
+          <div class="vs-item good"><span class="vs-mark">&#x2713;</span>Realistic gun sounds and in-game feedback</div>
+          <div class="vs-item good"><span class="vs-mark">&#x2713;</span>Full colour LCD screen with live game stats</div>
+          <div class="vs-item good"><span class="vs-mark">&#x2713;</span>Sirius respawn bases for multiple game modes</div>
+          <div class="vs-item good"><span class="vs-mark">&#x2713;</span>3 receivers to aim for</div>
+          <div class="vs-item good"><span class="vs-mark">&#x2713;</span>Light in weight</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weapon types -->
+    <div style="margin-top:72px;">
+      <p class="eyebrow reveal">Weapon Options</p>
+      <h3 class="heading reveal d1" style="font-size:clamp(30px,4vw,54px);margin-bottom:6px;">MULTIPLE WEAPON <span style="color:#00C8FF;">MODES</span></h3>
+      <p class="lead reveal d2" style="margin-bottom:0;">Choose your weapon class at the start of each game. Each has unique range, damage and fire-rate characteristics.</p>
+      <div class="weapon-strip">
+        <div class="weapon-card reveal d1">
+          <div class="weapon-num">01</div>
+          <h3>ASSAULT RIFLE</h3>
+          <p>Balanced range, fire rate and damage. The all-rounder &mdash; ideal for all game modes and all skill levels.</p>
+        </div>
+        <div class="weapon-card reveal d2">
+          <div class="weapon-num">02</div>
+          <h3>SNIPER</h3>
+          <p>Long range, high damage, slow fire rate. One shot, one elimination. Rewards patience and precision.</p>
+        </div>
+        <div class="weapon-card reveal d3">
+          <div class="weapon-num">03</div>
+          <h3>GRENADE LAUNCHER</h3>
+          <p>Area damage, short range, devastating impact. Dominate close-quarters and flush enemies from cover.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ LCD SCREEN ═══════════════════ -->
+<section class="lcd-section">
+  <div class="wrap section-pad">
+    <div class="lcd-grid">
+
+      <!-- Screen visual -->
+      <div class="lcd-screen-wrap reveal-l">
+        <div class="lcd-screen-label">Full Colour LCD Screen</div>
+        <!-- Replace with real LCD photo: <img class="lcd-screen-img" src="lcd-screen.jpg" alt="LCD Screen"> -->
+        <!-- Simulated LCD display -->
+       <img class="lcd-screen-img" src="lasertag photosection 5.png" alt="LCD Screen">
+        <div class="lcd-scan-overlay"></div>
+      </div>
+
+      <!-- Feature list -->
+      <div class="reveal-r">
+        <p class="eyebrow">New Tagger Technology</p>
+        <h2 class="heading" style="font-size:clamp(30px,4vw,54px);margin-bottom:10px;">FULL COLOUR<br><span style="color:#00C8FF;">LCD SCREEN</span></h2>
+        <p style="color:var(--grey);font-size:15px;line-height:1.7;margin-bottom:24px;">Our new lasertag taggers feature a full colour LCD screen, giving you real-time in-game data right on your weapon &mdash; more control than ever before.</p>
+
+        <div class="lcd-features">
+          <div class="lcd-feat">
+            <div class="lcd-feat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+            <div><h4>Health Bar</h4><p>View your current health units in real time throughout the game.</p></div>
+          </div>
+          <div class="lcd-feat">
+            <div class="lcd-feat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div><h4>Ammo Counter</h4><p>See exactly how much ammo remains in your magazine at all times.</p></div>
+          </div>
+          <div class="lcd-feat">
+            <div class="lcd-feat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <div><h4>Weapon Mode Swap</h4><p>Switch between weapon modes in-game for tactical flexibility.</p></div>
+          </div>
+          <div class="lcd-feat">
+            <div class="lcd-feat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+            <div><h4>Scoreboard Position</h4><p>See your live rank against all players during the game.</p></div>
+          </div>
+          <div class="lcd-feat">
+            <div class="lcd-feat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div><h4>Hits &amp; Eliminations</h4><p>Track your performance &mdash; total hits landed and confirmed eliminations.</p></div>
+          </div>
+          <div class="lcd-feat">
+            <div class="lcd-feat-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <div><h4>Time Remaining</h4><p>Always know exactly how much time is left to secure the win.</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SIRIUS STATION ═══════════════════ -->
+<section class="sirius-section">
+  <div class="wrap section-pad">
+    <div class="sirius-grid">
+
+      <!-- Left: Info -->
+      <div class="reveal-l">
+        <p class="eyebrow">Additional Game Device</p>
+        <h2 class="heading" style="font-size:clamp(30px,4vw,56px);margin-bottom:16px;">SIRIUS <span style="color:#00C8FF;">STATION</span></h2>
+        <p style="color:var(--grey-light);font-size:16px;line-height:1.8;margin-bottom:6px;">The Sirius Station is an additional device added to the game to enhance your experience. It can be set to serve a number of different purposes, each affecting the game mode at play.</p>
+
+        <div class="sirius-modes">
+          <div class="sirius-mode">
+            <div class="sirius-mode-badge">R</div>
+            <div><h4>Respawn Point</h4><p>Set individually for each team. Touch the station to respawn back into the battle.</p></div>
+          </div>
+          <div class="sirius-mode">
+            <div class="sirius-mode-badge">B</div>
+            <div><h4>Base</h4><p>Respawns friendly players and deals damage to enemies who enter the zone.</p></div>
+          </div>
+          <div class="sirius-mode">
+            <div class="sirius-mode-badge">M</div>
+            <div><h4>Medikit</h4><p>Slowly replenishes your health units when nearby. Protect it or it becomes your enemy's lifeline.</p></div>
+          </div>
+          <div class="sirius-mode">
+            <div class="sirius-mode-badge">X</div>
+            <div><h4>Radiation Zone</h4><p>Damages the health units of any player within the zone. Control it, avoid it, or use it as a trap.</p></div>
+          </div>
+          <div class="sirius-mode">
+            <div class="sirius-mode-badge">F</div>
+            <div><h4>Flag</h4><p>Used with Capture the Flag game modes &mdash; coordinate your team to capture and defend.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Visual -->
+      <div class="sirius-visual reveal-r" style="padding: 0; overflow: hidden;">
+        <img src="Gemini_Generated_Image_j7pq4fj7pq4fj7pq.png" alt="Sirius Station" style="width:100%; height:100%; min-height:450px; object-fit:cover; object-position:center; display:block;">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FEATURES ═══════════════════ -->
+<section style="background:var(--black);">
+  <div class="wrap section-pad">
+    <p class="eyebrow reveal">Why Lasertag?</p>
+    <h2 class="heading reveal d1">BUILT FOR <span class="r">EVERYONE</span></h2>
+    <div class="lt-features">
+      <div class="lt-feature reveal d1">
+        <div class="lt-feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <h3>ALL AGES</h3>
+        <p>From kids 6 years and older to grandparents &mdash; lasertag welcomes everyone to the field.</p>
+      </div>
+      <div class="lt-feature reveal d2">
+        <div class="lt-feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>ZERO PAIN</h3>
+        <p>Electronic infrared sensors &mdash; no pellets, no impact. Perfectly safe for all ages and events.</p>
+      </div>
+      <div class="lt-feature reveal d3">
+        <div class="lt-feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <h3>MAX ADRENALINE</h3>
+        <p>Don't let "pain-free" fool you &mdash; lasertag is intense, strategic and absolutely packed with excitement.</p>
+      </div>
+      <div class="lt-feature reveal d4" style="border-top:1px solid rgba(255,255,255,0.04);">
+        <div class="lt-feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <h3>ADVANCED TECH</h3>
+        <p>Most advanced tagger system in the country &mdash; LCD screens, real-time scoring, premium performance.</p>
+      </div>
+      <div class="lt-feature reveal d5" style="border-top:1px solid rgba(255,255,255,0.04);">
+        <div class="lt-feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <h3>COMBAT GAMES</h3>
+        <p>Team Deathmatch, Capture the Flag, VIP Protection and more &mdash; every session is a new mission.</p>
+      </div>
+      <div class="lt-feature reveal d6" style="border-top:1px solid rgba(255,255,255,0.04);">
+        <div class="lt-feature-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2" y="8" width="20" height="14" rx="2"/><path d="M12 8V5"/><path d="M8 8V6"/><path d="M16 8V6"/></svg></div>
+        <h3>ANY EVENT</h3>
+        <p>Birthdays, team builds, school outings, stag parties, family days &mdash; lasertag elevates every occasion.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ COMPARISON TABLE ═══════════════════ -->
+<section style="background:var(--black-2);border-top:1px solid rgba(255,255,255,0.04);">
+  <div class="wrap section-pad">
+    <p class="eyebrow reveal">Compare Activities</p>
+    <h2 class="heading reveal d1">PAINTBALL VS SPLATBALL VS <span style="color:#00C8FF;">LASERTAG</span></h2>
+    <div class="reveal" style="overflow-x:auto;margin-top:8px;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="th-red">Paintball</th>
+            <th class="th-yel">Splatball</th>
+            <th class="th-blue">Lasertag</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Minimum Age</td><td>10 years</td><td>6 &ndash; 10 years</td><td>6 years+</td></tr>
+          <tr><td>Physical Impact</td><td><span class="v-part">Moderate sting</span></td><td><span class="v-part">Low impact</span></td><td><span class="v-yes">None</span></td></tr>
+          <tr><td>Suitable for Families</td><td><span class="v-part">Older families</span></td><td><span class="v-yes">Yes</span></td><td><span class="v-yes">Best option</span></td></tr>
+          <tr><td>Adrenaline Level</td><td>High</td><td>Medium-High</td><td>High</td></tr>
+          <tr><td>Gear Included</td><td><span class="v-yes">Full kit</span></td><td><span class="v-yes">Full kit</span></td><td><span class="v-yes">Taggers + vest</span></td></tr>
+          <tr><td>Clothing Gets Marked</td><td><span class="v-no">Yes (paint)</span></td><td><span class="v-no">Yes (low-impact)</span></td><td><span class="v-yes">No marks</span></td></tr>
+          <tr><td>LCD Screen Stats</td><td><span class="v-no">No</span></td><td><span class="v-no">No</span></td><td><span class="v-yes">Full colour LCD</span></td></tr>
+          <tr><td>Multiple Weapon Modes</td><td><span class="v-no">No</span></td><td><span class="v-no">No</span></td><td><span class="v-yes">Rifle, Sniper, Launcher</span></td></tr>
+          <tr><td>Sirius Game Stations</td><td><span class="v-no">No</span></td><td><span class="v-no">No</span></td><td><span class="v-yes">Yes</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PHOTO GALLERY ═══════════════════ -->
+<div class="lt-photo-row">
+      
+      <div class="lt-photo-item wide">
+        <img src="lasertag photosection 1.png" alt="Lasertag Action">
+      </div>
+      
+      <div class="lt-photo-item">
+        <img src="lasertag photosection 4.png" alt="Player with Tagger">
+      </div>
+      
+      <div class="lt-photo-item">
+        <img src="lasertag photosection 3.png" alt="Arena Setup">
+      </div>
+      
+      <div class="lt-photo-item wide">
+        <img src="lasertag photosection 2.png" alt="Family or Group Lasertag">
+      </div>
+
+    </div>
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<div class="cta-banner">
+  <h2>BOOK YOUR MISSION</h2>
+  <p>Bookings essential &mdash; call to secure your lasertag session today</p>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;">
+    <a href="contact.html" class="btn btn-primary">076 444 5570</a>
+    <a href="http://www.durbanlasertag.co.za" target="_blank" class="btn btn-secondary" style="border-color:rgba(255,255,255,0.4);">durbanlasertag.co.za</a>
+  </div>
+</div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo-main">DURBAN <em>PAINT</em>BALL</div>
+        <p class="footer-tagline">KZN's longest standing paintball arena with over 35 years of experience. Paintball, Splatball &amp; Lasertag built for memories.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="rules.html">Paintball Rules</a></li>
+          <li><a href="lasertag.html">Durban Lasertag</a></li>
+          <li><a href="contact.html">Contact &amp; Directions</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="tel:0764445570">076 444 5570</a></li>
+          <li><a href="tel:0640045194">064 004 5194</a></li>
+          <li><a href="contact.html">31 Uitsig Road, Durban North</a></li>
+          <li><a href="http://www.durbanlasertag.co.za" target="_blank">durbanlasertag.co.za</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 Durban Paintball &mdash; Durban North, KZN</div>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
