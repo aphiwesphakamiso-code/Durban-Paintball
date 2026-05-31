@@ -1,1 +1,2 @@
 Our experienced team will ensure that you have only the best time and we strive to create a memorable experience no matter what the event. We take pride in what we do and constantly upgrade our equipment and fields to bring you only the best. We thank our loyal customers and we welcome the new to join the Durban Lasertag and Paintball family.
+Here is the link to access the site https://aphiwesphakamiso-code.github.io/Durban-Paintball/
